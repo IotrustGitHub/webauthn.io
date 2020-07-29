@@ -18,6 +18,7 @@ func jsonResponse(w http.ResponseWriter, d interface{}, c int) {
 		http.Error(w, "Error creating JSON response", http.StatusInternalServerError)
 	}
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(c)
 	fmt.Fprintf(w, "%s", dj)
 }
