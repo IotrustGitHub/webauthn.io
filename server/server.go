@@ -96,5 +96,8 @@ func (ws *Server) registerRoutes() {
 
 	// Static file serving
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+
+	log.Fatal(http.ListenAndServeTLS(":443","/etc/letsencrypt/live/didonfido.cafe24.com/fullchain.pem","/etc/letsencrypt/live/didonfido.cafe24.com/privkey.pem", nil))
+
 	ws.server.Handler = router
 }
