@@ -100,6 +100,11 @@ func (ws *Server) registerRoutes() {
 
 	//log.Fatal(http.ListenAndServeTLS(":443","/etc/letsencrypt/live/didonfido.cafe24.com/fullchain.pem","/etc/letsencrypt/live/didonfido.cafe24.com/privkey.pem", nil))
 
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:3000", "https://did-on-fido.github.io/"},
+		AllowCredentials: true,
+	})
+
 	//ws.server.Handler = router
-	ws.server.Handler = cors.Default().Handler(router)
+	ws.server.Handler = c.Handler(router)
 }
