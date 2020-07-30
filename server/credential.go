@@ -87,18 +87,21 @@ func (ws *Server) MakeNewCredential(w http.ResponseWriter, r *http.Request) {
 
 	sessionData, err := ws.store.GetWebauthnSession("registration", r)
 	if err != nil {
+		log.Info("ERROR in GetWebauthnSession")
 		jsonResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	// Get the user associated with the credential
 	user, err := models.GetUser(models.BytesToID(sessionData.UserID))
 	if err != nil {
+		log.Info("ERROR in GetUser")
 		jsonResponse(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	// Verify that the challenge succeeded
 	cred, err := ws.webauthn.FinishRegistration(user, sessionData, r)
 	if err != nil {
+		log.Info("ERROR in FinishRegistration")
 		jsonResponse(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -109,6 +112,7 @@ func (ws *Server) MakeNewCredential(w http.ResponseWriter, r *http.Request) {
 	// database
 	authenticator, err := models.CreateAuthenticator(cred.Authenticator)
 	if err != nil {
+		log.Info("ERROR in CreateAuthenticator")
 		log.Errorf("error creating authenticator: %v", err)
 		jsonResponse(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -127,6 +131,7 @@ func (ws *Server) MakeNewCredential(w http.ResponseWriter, r *http.Request) {
 	}
 	err = models.CreateCredential(c)
 	if err != nil {
+		log.Info("ERROR in CreateCredential")
 		jsonResponse(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
