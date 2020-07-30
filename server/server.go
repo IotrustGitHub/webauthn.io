@@ -71,8 +71,8 @@ func WithWebAuthn(w *webauthn.WebAuthn) Option {
 // Start starts the underlying HTTP server
 func (ws *Server) Start() error {
 	log.Printf("Starting webauthn server at %s", ws.server.Addr)
-	return ws.server.ListenAndServe()
-	//return ws.server.ListenAndServeTLS("/etc/letsencrypt/live/didonfido.cafe24.com/fullchain.pem","/etc/letsencrypt/live/didonfido.cafe24.com/privkey.pem")
+	//return ws.server.ListenAndServe()
+	return ws.server.ListenAndServeTLS("/etc/letsencrypt/live/didonfido.cafe24.com/fullchain.pem","/etc/letsencrypt/live/didonfido.cafe24.com/privkey.pem")
 }
 
 // Shutdown attempts to gracefully shutdown the underlying HTTP server.

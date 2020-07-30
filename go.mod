@@ -36,6 +36,7 @@ require (
 	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/prometheus/client_golang v1.2.1 // indirect
 	github.com/prometheus/procfs v0.0.7 // indirect
+	github.com/rs/cors v1.6.0
 	github.com/securego/gosec v0.0.0-20191119104125-df484bfa9e9f // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/afero v1.2.2 // indirect

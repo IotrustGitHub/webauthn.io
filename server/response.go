@@ -24,9 +24,11 @@ func jsonResponse(w http.ResponseWriter, d interface{}, c int) {
 	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	*/
 
+	/*		
 	cs := w.Header().Get("Set-Cookie")
 	cs += "; SameSite=None; Secure"
 	w.Header().Set("Set-Cookie", cs)
+	*/
 
 	w.WriteHeader(c)
 	fmt.Fprintf(w, "%s", dj)
