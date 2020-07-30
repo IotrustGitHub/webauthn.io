@@ -75,17 +75,22 @@ func (store *Store) SaveWebauthnSession(key string, data *webauthn.SessionData, 
 // GetWebauthnSession unmarshals and returns the webauthn session information
 // from the session cookie.
 func (store *Store) GetWebauthnSession(key string, r *http.Request) (webauthn.SessionData, error) {
+	log.Info("[ENTER] GetWebauthnSession")
+
 	sessionData := webauthn.SessionData{}
 	session, err := store.Get(r, WebauthnSession)
 	if err != nil {
+		log.Info("ERROR in store.Get")
 		return sessionData, err
 	}
 	assertion, ok := session.Values[key].([]byte)
 	if !ok {
+		log.Info("ERROR in session.Values")
 		return sessionData, ErrMarshal
 	}
 	err = json.Unmarshal(assertion, &sessionData)
 	if err != nil {
+		log.Info("ERROR in Unmarshal")
 		return sessionData, err
 	}
 	// Delete the value from the session now that it's been read
