@@ -85,7 +85,7 @@ func (ws *Server) registerRoutes() {
 	// Unauthenticated handlers for registering a new credential and logging in.
 	router.HandleFunc("/", ws.Login)
 	router.HandleFunc("/makeCredential/{name}", ws.RequestNewCredential).Methods("GET")
-	router.HandleFunc("/makeCredential", ws.MakeNewCredential).Methods("POST")
+	router.HandleFunc("/makeCredential", ws.MakeNewCredential).Methods("POST", "OPTIONS")
 	router.HandleFunc("/assertion/{name}", ws.GetAssertion).Methods("GET")
 	router.HandleFunc("/assertion", ws.MakeAssertion).Methods("POST")
 	router.HandleFunc("/user/{name}/exists", ws.UserExists).Methods("GET")
