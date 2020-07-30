@@ -3,5 +3,5 @@
     "db_path": "webauthn.db",
     "host_address": "210.114.1.201",
     "host_port": "80",
-    "relying_party": "didonfido.cafe24.com"
+    "relying_party": "localhost"
 }
