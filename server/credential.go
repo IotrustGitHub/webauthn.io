@@ -15,6 +15,9 @@ import (
 // RequestNewCredential begins a Credential Registration Request, returning a
 // PublicKeyCredentialCreationOptions object
 func (ws *Server) RequestNewCredential(w http.ResponseWriter, r *http.Request) {
+
+	log.Info("[ENTER] RequestNewCredential")
+
 	vars := mux.Vars(r)
 	username := vars["name"]
 
