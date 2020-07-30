@@ -19,6 +19,7 @@ func jsonResponse(w http.ResponseWriter, d interface{}, c int) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.WriteHeader(c)
 	fmt.Fprintf(w, "%s", dj)
 }
