@@ -13,8 +13,6 @@ import (
 	"github.com/duo-labs/webauthn/webauthn"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-
-	"crypto/tls"
 )
 
 // Timeout is the number of seconds to attempt a graceful shutdown, or
@@ -36,25 +34,11 @@ type Server struct {
 // NewServer returns a new instance of a Server configured with the provided
 // configuration
 func NewServer(config *config.Config, opts ...Option) (*Server, error) {
-    tlsConfig := &tls.Config{
-        MinVersion:               tls.VersionTLS12,
-        CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
-        PreferServerCipherSuites: true,
-        CipherSuites: []uint16{
-            tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-            tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-            tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
-            tls.TLS_RSA_WITH_AES_256_CBC_SHA,
-        },
-    }
-
 	addr := net.JoinHostPort(config.HostAddress, config.HostPort)
 	defaultServer := &http.Server{
 		Addr:         addr,
 		ReadTimeout:  Timeout,
 		WriteTimeout: Timeout,
-        TLSConfig:    tlsConfig,
-		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
 	}
 	defaultStore, err := session.NewStore()
 	if err != nil {
@@ -87,8 +71,7 @@ func WithWebAuthn(w *webauthn.WebAuthn) Option {
 // Start starts the underlying HTTP server
 func (ws *Server) Start() error {
 	log.Printf("Starting webauthn server at %s", ws.server.Addr)
-	//return ws.server.ListenAndServe()
-	return ws.server.ListenAndServeTLS("/etc/letsencrypt/live/didonfido.cafe24.com/cert.pem","/etc/letsencrypt/live/didonfido.cafe24.com/privkey.pem")
+	return ws.server.ListenAndServe()
 }
 
 // Shutdown attempts to gracefully shutdown the underlying HTTP server.
