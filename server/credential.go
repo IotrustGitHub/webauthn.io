@@ -80,10 +80,6 @@ func (ws *Server) RequestNewCredential(w http.ResponseWriter, r *http.Request) {
 func (ws *Server) MakeNewCredential(w http.ResponseWriter, r *http.Request) {
 	// Load the session data
 
-	if (*r).Method == "OPTIONS" {
-		return
-	}
-	
 	sessionData, err := ws.store.GetWebauthnSession("registration", r)
 	if err != nil {
 		jsonResponse(w, err.Error(), http.StatusBadRequest)
