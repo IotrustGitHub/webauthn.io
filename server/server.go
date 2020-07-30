@@ -12,6 +12,7 @@ import (
 	"github.com/duo-labs/webauthn.io/session"
 	"github.com/duo-labs/webauthn/webauthn"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // Timeout is the number of seconds to attempt a graceful shutdown, or
@@ -85,7 +86,7 @@ func (ws *Server) registerRoutes() {
 	// Unauthenticated handlers for registering a new credential and logging in.
 	router.HandleFunc("/", ws.Login)
 	router.HandleFunc("/makeCredential/{name}", ws.RequestNewCredential).Methods("GET")
-	router.HandleFunc("/makeCredential", ws.MakeNewCredential).Methods("POST", "OPTIONS")
+	router.HandleFunc("/makeCredential", ws.MakeNewCredential).Methods("POST")
 	router.HandleFunc("/assertion/{name}", ws.GetAssertion).Methods("GET")
 	router.HandleFunc("/assertion", ws.MakeAssertion).Methods("POST")
 	router.HandleFunc("/user/{name}/exists", ws.UserExists).Methods("GET")
@@ -99,5 +100,6 @@ func (ws *Server) registerRoutes() {
 
 	//log.Fatal(http.ListenAndServeTLS(":443","/etc/letsencrypt/live/didonfido.cafe24.com/fullchain.pem","/etc/letsencrypt/live/didonfido.cafe24.com/privkey.pem", nil))
 
-	ws.server.Handler = router
+	//ws.server.Handler = router
+	ws.server.Handler = cors.Default().Handler(router)
 }
