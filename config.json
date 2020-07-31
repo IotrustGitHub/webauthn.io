@@ -3,5 +3,5 @@
     "db_path": "webauthn.db",
     "host_address": "210.114.1.201",
     "host_port": "443",
-    "relying_party": "localhost"
+    "relying_party": "did-on-fido.github.io"
 }
